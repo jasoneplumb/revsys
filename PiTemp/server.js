@@ -6,11 +6,11 @@
 // The structure and form of this web app was based on information at the following page:
 // http://www.robert-drummond.com/2013/05/08/how-to-build-a-restful-web-api-on-a-raspberry-pi-in-javascript-2/
 
-// Use the following libraries. Before use, these must be installed (at least locally) using npm.
-var rasp2c = require('rasp2c'); // Used to read the sensor data via I2C e.g. at 0x77
-var express = require('express'); // Simple web app service
+// Include the bmp180 library
+var bmp180 = require('./bmp180');
 
 // Start an instance of the Express service
+var express = require('express'); // Simple web app service
 var app = express();
 app.listen(3000); // Express services typically use port 3000
 
@@ -56,66 +56,9 @@ app.use(function (err, req, res, next) {
   }
 });
 
-// Delay mechanism used to wait for sensor readiness
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
-};
-
 // Read and store the temp every five seconds
 setInterval( function () {
-  var c5, c6, mC, mD;
-  var tempC, tempF;
-  var tU, a;
-
-  // First read and setup the temperature calculation according to the calibration values
-  rasp2c.dump('0x77', '0xB2-0xBF', function(err, result) {
-    if (err) {
-      console.log(err);
-    } else {
-      c5 = (result[0] * 256 + result[1]) * Math.pow(2, -15) / 160;
-      c6 = result[2] * 256 + result[3];
-      {
-        var MC, MD;
-
-        MC = result[10] * 256 + result[11];
-        if (MC > 32767) MC = MC - 65536; // convert to a signed 16-bit value.
-        mC = ( Math.pow(2, 11) / Math.pow(160, 2) ) * MC;
-
-        MD = result[12] * 256 + result[13];
-        if (MD > 32767) MD = MD - 65536; // convert to a signed 16-bit value
-        mD = MD / 160;
-      }
-
-      // Then request a sensor reading by writing code 0x2E to address 0xF4
-      rasp2c.set('0x77', '0xF4', '0x2E', function(err, result) {
-        if (err) {
-          console.log(err);
-        } else {
-
-          sleep(5); // The sensor is ready to read 4.5 ms after the request (set)
-
-          rasp2c.dump('0x77', '0xF6-0xF7', function(err2, result2) {
-            if (err2) {
-              console.log(err2);
-            } else {
-              tU = result2[0] * 256 + result2[1];
-              a = (tU - c6) * c5;
-              tempC = a + (mC / (a + mD));
-              tempF = 32 + (9/5) * tempC;
-
-              inputs[0].value = tempF.toFixed(2).toString(); // store value as a string
-              console.log(inputs[0].value);
-            }
-          });
-        }
-      });
-    }
-  });
+  bmp180.temperature( 2, inputs[0] );
 }, 5000);
 
 // EOF
