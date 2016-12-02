@@ -2,7 +2,7 @@
 // A library for accessing and using the data from the Bosch bmp180 sensor.
 // More information about the BMP180 can be found here:
 // https://www.bosch-sensortec.com/bst/products/all_products/bmp180
-// This file is one of four: server.js, client.js, bmp180.js  and index.html.
+// This file is one of four: server.js, client.js, bmp180.js and index.html.
 // To use, execute 'node server.js' then open a browser to the ip and port e.g. http://192.168.0.78:3000
 // Temp equations based on the following source: http://wmrx00.sourceforge.net/Arduino/BMP085-Calcs.pdf
 // The structure and form of this web app was based on information at the following page:

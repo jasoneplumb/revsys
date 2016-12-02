@@ -1,6 +1,6 @@
 // File: client.js
 // The client-side portion of the PiTemp web app.
-// This file is one of three: server.js, client.js and index.html.
+// This file is one of four: server.js, client.js, bmp180.js and index.html.
 
 window.onload = function () {
   var url, i, inputID = ['temp'];  // the inputs used
@@ -8,7 +8,7 @@ window.onload = function () {
   // Display some initial (place holder) text
   $('#input_' + inputID[0]).html('Loading...');
 
-  // Every five seconds, display the seneor temperature
+  // Every five seconds, display the sensor temperature
   setInterval( function () {
     url = document.URL + 'inputs/' + inputID[0];
     console.log('making API call ' + url);
