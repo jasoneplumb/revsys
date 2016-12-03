@@ -58,7 +58,7 @@ app.use(function (err, req, res, next) {
 
 // Read and store the temp every five seconds
 setInterval( function () {
-  bmp180.temperature( 2, inputs[0] );
+  bmp180.temperature( '0x77', 2, inputs[0] );
 }, 5000);
 
 // EOF
