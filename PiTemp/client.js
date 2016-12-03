@@ -3,7 +3,7 @@
 // This file is one of four: server.js, client.js, bmp180.js and index.html.
 
 window.onload = function () {
-  var url, i, inputID = ['temp'];  // the inputs used
+  var url, inputID = ['temp'];  // the inputs used
 
   // Display some initial (place holder) text
   $('#input_' + inputID[0]).html('Loading...');
