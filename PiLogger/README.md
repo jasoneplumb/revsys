@@ -15,5 +15,3 @@ This starts the http server on localthost using port 3000
 
 To view the exposed data, browse to http://[your RPi's IP Address]:3000, the index.html will be loaded ad displayed (served by server.js) 
 index.html loads the client.js file which contains the JSON query logic.
-
-Note
