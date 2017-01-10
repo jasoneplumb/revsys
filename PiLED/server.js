@@ -1,4 +1,4 @@
-// File: server.js 
+// File: server.js
 // The server-side portion of the PiLED web app.
 // This file is one of three: server.js, client.js and index.html.
 // To use, execute 'node server.js' then open a browser to the ip and port e.g. http://192.168.0.78:3000
@@ -19,36 +19,34 @@ app.use(express.static(__dirname));
 var inputs = [ { input: 'LED_status', value: null } ];
 var requests = [ { input: 'LED_toggle', value: null } ];
 
-var LED_state = 0;
+var ledState = 0;
 
 // Turn the LED off initially
-var fileName = "/sys/class/leds/led0/brightness";
-fs.writeFile( fileName, '0' );
+var fileName = '/sys/class/leds/led0/brightness';
+fs.writeFile(fileName, '0');
 
 // Express route for incoming requests for a single input
 app.get('/inputs/:id', function (req, res) {
   var i;
-  for (i in inputs){
+  for (i in inputs) {
     if ((req.params.id === inputs[i].input)) {
       // send to client an inputs object as a JSON string
       res.send(inputs[i]);
       return;
-    }
-    else if ((req.params.id === requests[i].input)) {
-
+    } else if ((req.params.id === requests[i].input)) {
       // Toggle the value of the LED
-      LED_state ^= 1;
+      ledState ^= 1;
 
       // Set the LED brightness to reflect the correct state
       // Note that this method of controlling the built-in LED requires
       // that the Web App is run as an administrator, otherwise the file
       // operations will fail
-      var fileName = "/sys/class/leds/led0/brightness";
+      var fileName = '/sys/class/leds/led0/brightness';
       // Then recreate the file so that it contains the correct brightness value
-      if ( LED_state === 1 ) {
-        fs.writeFile( fileName, '1' );
+      if (ledState === 1) {
+        fs.writeFile(fileName, '1');
       } else {
-        fs.writeFile( fileName, '0' );
+        fs.writeFile(fileName, '0');
       }
 
       // Finally, send to client an requests object as a JSON string
@@ -83,11 +81,11 @@ app.use(function (err, req, res, next) {
 });
 
 // Read and store the LED status every half second
-setInterval( function () {
-  if ( LED_state === 0 ) {
-    inputs[0].value = "off";
+setInterval(function () {
+  if (ledState === 0) {
+    inputs[0].value = 'off';
   } else {
-    inputs[0].value = "on";
+    inputs[0].value = 'on';
   }
 }, 500);
 
