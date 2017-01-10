@@ -1,9 +1,11 @@
-// File: store_local.js 
-// A simple local storage implementation of the logging abstraction.
+// File: store_ipfs.js 
+// A crude ipfs storage implementation of the logging abstraction.
 
 var ipfsapi = require( 'ipfs-api' );
 var ipfs = ipfsapi( process.env['IPFS'] );
-var log = {}; // To store log names and cooresponding cryptographic hashes
+
+// Create an empty object to store log names and related authorizatio$
+var log = {};
 
 var streamToString = function( stream, callback ) {
     var str = '';
