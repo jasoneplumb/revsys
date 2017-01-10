@@ -1,4 +1,4 @@
-// File: server.js 
+// File: server.js
 // The server-side portion of the PiTemp web app.
 // This file is one of four: server.js, client.js, bmp180.js and index.html.
 // To use, execute 'node server.js' then open a browser to the ip and port e.g. http://192.168.0.78:3000
@@ -23,7 +23,7 @@ var inputs = [ { input: 'temp', value: null } ];
 // Express route for incoming requests for a single input
 app.get('/inputs/:id', function (req, res) {
   var i;
-  for (i in inputs){
+  for (i in inputs) {
     if ((req.params.id === inputs[i].input)) {
       // send to client an inputs object as a JSON string
       res.send(inputs[i]);
@@ -57,8 +57,8 @@ app.use(function (err, req, res, next) {
 });
 
 // Read and store the temp every five seconds
-setInterval( function () {
-  bmp180.temperature( '0x77', 2, inputs[0] );
+setInterval(function () {
+  bmp180.temperature('0x77', 2, inputs[0]);
 }, 5000);
 
 // EOF
