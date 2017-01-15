@@ -2,15 +2,17 @@
 // The client-side portion of the PiLED web app.
 // This file is one of three: server.js, client.js and index.html.
 
+/* global $ */
+
 window.onload = function () {
-  var url, inputID = ['LED_status']; // The inputs used
+  var inputID = ['LED_status']; // The inputs used
 
   // Display some initial (place holder) text
   $('#input_' + inputID[0]).html('Loading...');
 
   // Every half second, display the LED status
-  setInterval( function () {
-    url = document.URL + 'inputs/' + inputID[0];
+  setInterval(function () {
+    var url = document.URL + 'inputs/' + inputID[0];
     console.log('making API call ' + url);
 
     $.getJSON(url, function (data) {
@@ -21,10 +23,10 @@ window.onload = function () {
 };
 
 // Change the state (on, off) of the LED when called
-function toggleLED() {
+function toggleLED () {
   var requestID = ['LED_toggle']; // The requests
 
-  url = document.URL + 'inputs/' + requestID[0];
+  var url = document.URL + 'inputs/' + requestID[0];
   console.log('making API call ' + url);
 
   $.getJSON(url, function (data) {
@@ -33,5 +35,5 @@ function toggleLED() {
   });
 }
 
-//EOF
+// EOF
 
