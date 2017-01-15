@@ -1,5 +1,5 @@
 // File: client.js
-// The client-side portion of the PiLED web app.
+// The client-side portion of the PiLogger web app.
 // This file is one of three: server.js, client.js and index.html.
 
 /* global $ */
