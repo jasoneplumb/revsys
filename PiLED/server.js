@@ -22,8 +22,11 @@ var requests = [ { input: 'LED_toggle', value: null } ];
 var ledState = 0;
 
 // Turn the LED off initially
+function callback( err, result ) {
+  if (err) console.log( 'error', err );
+}
 var fileName = '/sys/class/leds/led0/brightness';
-fs.writeFile(fileName, '0');
+fs.writeFile(fileName, '0', callback);
 
 // Express route for incoming requests for a single input
 app.get('/inputs/:id', function (req, res) {
@@ -44,9 +47,9 @@ app.get('/inputs/:id', function (req, res) {
       var fileName = '/sys/class/leds/led0/brightness';
       // Then recreate the file so that it contains the correct brightness value
       if (ledState === 1) {
-        fs.writeFile(fileName, '1');
+        fs.writeFile(fileName, '1', callback);
       } else {
-        fs.writeFile(fileName, '0');
+        fs.writeFile(fileName, '0', callback);
       }
 
       // Finally, send to client an requests object as a JSON string
