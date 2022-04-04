@@ -8,11 +8,16 @@
 
 // Include the bmp180 library
 var bmp180 = require('./bmp180');
+const cors = require('cors');
 
 // Start an instance of the Express service
 var express = require('express'); // Simple web app service
 var app = express();
 app.listen(3000); // Express services typically use port 3000
+app.use(cors());
+app.options('*', cors({
+	origin: '*'
+}));
 
 // Return the related index.html file (located in the same direcory as this file).
 app.use(express.static(__dirname));
@@ -26,6 +31,7 @@ app.get('/inputs/:id', function (req, res) {
   for (i in inputs) {
     if ((req.params.id === inputs[i].input)) {
       // send to client an inputs object as a JSON string
+      console.log('inputs-temp: sending ' + inputs[i].value)
       res.send(inputs[i]);
       return;
     }
