@@ -1,0 +1,17 @@
+{
+  "name": "pitemp",
+  "version": "1.0.0",
+  "description": "README",
+  "main": "client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "revsys",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.14.0",
+    "rasp2c": "0.0.3"
+  }
+}
